@@ -25,9 +25,11 @@ const Movies = ({ movies, loading, error }) => {
                   </p>
                 </div>
               ) : (
-                movies.map((movie, index) => (
-                  <MoviesCard movies={movie} key={index} />
-                ))
+                movies.map((movie, index) => {
+                  {
+                    return <MoviesCard movies={movie} key={index} />;
+                  }
+                })
               )}
             </div>
           )}
