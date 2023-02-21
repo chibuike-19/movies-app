@@ -4,21 +4,20 @@ import axios from "axios";
 import {MdKeyboardBackspace} from "react-icons/md"
 import { useParams, Link } from "react-router-dom";
 import Loader from "./Loader";
+import GetMovies from "./getMovies";
 
 const MovieDetail = () => {
   const [result, setResult] = useState({});
   const [loading, setLoading] = useState(true);
-
+  const [error, setError] = useState("")
   const { id } = useParams();
   const movie_url = `https://api.themoviedb.org/3/movie/${id}?api_key=48f71393228ae8b29caa11339fef50b9&language=en-US`;
 
   const img = "https://image.tmdb.org/t/p/w500";
 
   const FetchMovies = async () => {
-    const response = await axios(movie_url);
-    console.log(response.data);
-    setLoading(false);
-    setResult(response.data);
+   const response = GetMovies(movie_url, setError, setLoading)
+   response.then((value) => setResult(value))
   };
   useEffect(() => {
     FetchMovies();

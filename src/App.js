@@ -1,31 +1,30 @@
-import './App.css';
-import { BrowserRouter, Routes, Route} from "react-router-dom"
-import Home from './components/home';
-import MovieDetail from './components/movieDetail';
+import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./components/home";
+import MovieDetail from "./components/movieDetail";
 import axios from "axios";
+import { base_url } from "./components/getMovies";
 import { useState, useEffect } from "react";
-
+import GetMovies from "./components/getMovies";
 
 function App() {
-        const [movies, setMovies] = useState([]);
-        const [loading, setLoading] = useState(true);
+  const [movies, setMovies] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-        const search = "/discover/movie?sort_by=popularity.desc";
-        const api_key = "&api_key=48f71393228ae8b29caa11339fef50b9";
-        const base_url = "https://api.themoviedb.org/3";
+  const search = "/discover/movie?sort_by=popularity.desc";
+  const api_key = "&api_key=" + process.env.REACT_APP_API_KEY;
 
-        const main_url = base_url + search + api_key;
+  const main_url = base_url + search + api_key;
 
-        const FetchMovies = async () => {
-          const response = await axios(main_url);
-          console.log(response);
-          setLoading(false);
-          setMovies(response.data.results);
-        };
+  const FetchMovies = async () => {
+    const response = GetMovies(main_url, setError, setLoading);
+    response.then((value) => setMovies(value.results))
+  };
 
-        useEffect(() => {
-          FetchMovies();
-        }, []);
+  useEffect(() => {
+    FetchMovies();
+  }, []);
 
   return (
     <BrowserRouter>
@@ -37,12 +36,14 @@ function App() {
               setMovies={setMovies}
               setLoading={setLoading}
               FetchMovies={FetchMovies}
+              setError={setError}
+              error={error}
               movies={movies}
               loading={loading}
             />
           }
         />
-        <Route path="/movies/:id" element={<MovieDetail movies={movies}/>} />
+        <Route path="/movies/:id" element={<MovieDetail movies={movies} />} />
       </Routes>
     </BrowserRouter>
   );

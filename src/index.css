@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.nav-item {
+    @apply relative before:content-[''] before:absolute hover:before:w-full before:-bottom-1 before:left-0 before:h-1 before:transition-all before:w-0 transform -translate-x-1/2 before:bg-[#610303] focus:before:w-full
+}

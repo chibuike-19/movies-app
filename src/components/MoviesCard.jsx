@@ -6,13 +6,13 @@ const MoviesCard = ({ movies }) => {
 
   return (
     <Link to={`/movies/${movies.id}`}>
-      <div className="overflow-hidden border-b-2 mb-3 sm:h-full cursor-pointer">
+      <div className="overflow-hidden border-b-2 pb-3 sm:h-full cursor-pointer">
         <img
           src={img + movies.poster_path}
           alt=""
           className="object-cover h-[22rem] w-full"
         />
-        <div className="flex justify-between bg-[#f13e3e] items-center px-1 h-12 sm:h-20">
+        <div className="flex justify-between bg-[#f13e3e] text-[#000000dc] items-center px-1 h-12 sm:h-20">
           <div className="text-lg">{movies.title}</div>
           <div className="border-2 border-red-700 bg-red-700 rounded-full p-1 sm:p-2">
             {movies.vote_average}
